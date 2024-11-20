@@ -1,3 +1,5 @@
+(# Under Construction)
+
 An emprirically successful reinforcement learning algorithm that generalizes well to several environments in single agent and multi-agent settings is Proximal Policy Optimization, PPO for short or MAPPO in multi-agent scenarios (cite PPO paper). PPO is part of the gradient policy family of algorithms. Here is a short list of some advantages of PPO:
 - Applicable to continuous control tasks and tasks with discrete action space
 - Naturally explores action spaces without needing to include a noise process or entropy term
@@ -19,9 +21,21 @@ $Q^{\pi}(s,a) = \sum_{t=0}^{\infty}\mathbb{E}\[r_{t} - \rho{\pi}|s_{0}=s,a_{0}=a
 
 Recall that the state-action value gives a score to how good it is to be in a certain state and taking a specific action.
 
-In the second view, 
+The second view, is the same as is introduced in (Sutton & Barto 2018), a discounted view:
 
-There are two overarching paradigms to solving reinforcement learning problems, value iteration and policy iteration. A famous example of a value iteration algorithm is Q-Learning. As you may have guessed policy gradient methods and PPO fall under the policy iteration paradigm. Essentially value iteration initializes random values for each state or state-action pair and iteratively updates the values by using Bellman optimality equations as update rules until the values converge. After convergence a greedy policy is paired with the value function to make decisions at each state. On the other hand in policy iteration, the policy is updated using a value function until the policy converges. Please refer to Sutton & Barto 2012 for more details on policy and value iteration. 
+$\rho_{\pi} = \mathbb{E}\[\sum_{t=1}^{\infty}\gamma^{t-1}r_{t}|s_{0}, \pi\]$
+and 
+$Q^{\pi}(s,a) = \mathbb{E}\[\sum_{k=1}^{\infty}\gamma^{k-1}r_{t+k}|s_{t}=s,a_{t}=a,\pi\]$ (The expectation in both equations is taken w.r.t the policy).
+In addition, the steady state distribution of s is now $d^{\pi}(s) = \sum_{t=0}^{\infty}\gamma^{t}P(s_{t}=s|s_{0},\pi)$. In words, the frequnecy of state visits to a particular state s is the discounted sum of the probability that state is visited when starting in state s_{0} and following policy $\pi$, at every timestep. Exponential discounting bounds the value so that it is finite. 
+
+At this point, the paper introduces the Policy Gradient Theorem:
+For any MDPs,
+
+$\diffp{\rho}{\theta} = \sum_{s}d^{\pi}(s)\sum_{a}\diffp{\pi}{\theta}Q^{\pi}(s,a)$. 
+($\theta$ are the parameters of the policy)
+The most important takeaway is that the steady state distribution does not change with changes to policy parameters since no $\diffp{\d^{\pi}}{\theta}$ is present. Suppose it were the case that the state distribution changed as the policy is changed, then this affects $\rho$ which in turn, changes $Q^{\pi}$ leading to any ... (expand on this here) (Q^{\pi} can be approximated by returns)
+
+The requirement is that we have a good approximate for $Q^{\pi}$. Following the paper's notation, let $f_{w}$ be an approximation for $Q^{\pi}$ where $f$ is a function parameterized by weights $w$. To learn $f_{w}$ it is possible to take actions according to $\pi$ and us the update rule
 
 
  
