@@ -33,9 +33,9 @@ In addition, the steady state distribution of s is now $d^{\pi}(s) = \sum_{t=0}^
 At this point, the paper introduces the Policy Gradient Theorem:
 For any MDPs,
 
-$\partial{\rho}{\theta} = \sum_{s}d^{\pi}(s)\sum_{a}\partialp{\pi}{\theta}Q^{\pi}(s,a)$. 
+$\frac{\partial{\rho}}{\partial\theta} = \sum_{s}d^{\pi}(s)\sum_{a}\fac{\partialp{\pi}}{\partial\theta}Q^{\pi}(s,a)$. 
 ($\theta$ are the parameters of the policy)
-The most important takeaway is that the steady state distribution does not change with changes to policy parameters since no $\partialp{\d^{\pi}}{\theta}$ is present. Suppose it were the case that the state distribution changed as the policy is changed, then this affects $\rho$ which in turn, changes $Q^{\pi}$ leading to any ... (expand on this here) (Q^{\pi} can be approximated by returns)
+The most important takeaway is that the steady state distribution does not change with changes to policy parameters since no $\frac{\partial{\d^{\pi}}}{\partial\theta}$ is present. Suppose it were the case that the state distribution changed as the policy is changed, then this affects $\rho$ which in turn, changes $Q^{\pi}$ leading to any ... (expand on this here) (Q^{\pi} can be approximated by returns)
 
 Here I will walk through each line of the the proof adding comments on how it came to be, which mostly uses the definitions of the above formulations.
 To start (expanding this out will give us $\partial{\rho}{\theta}$):
