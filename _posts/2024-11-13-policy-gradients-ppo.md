@@ -48,17 +48,17 @@ Next it is beneficial to expand out the definition of $Q^{\pi}$ in the term to t
 $=\sum_{a}(\frac{\partial\pi}{\partial\theta}Q^{\pi} + \pi*\frac{\partial}{\partial\theta}(R_{s}^{a} - \rho(\pi) + \sum_{s'}(P_{ss'}^{a}V^{\pi}(s'))))$
 
 Now pass the derivative operator through. Only $V^{\pi}$ depends on the policy params $\theta$ and finally $\partial{\rho}{\theta}$ appears:
-$=\sum_{a}(\partial{\pi}{\theta}Q^{\pi} + \pi*(-\partial{\rho}{\pi} + \sum_{s'}P_{ss'}^{a}\partial{V^{\pi}}{\theta}))$
+$=\sum_{a}(\frac{\partial\pi}{\partial\theta}Q^{\pi} + \pi*(-\frac{\partial\rho}{\partial\theta} + \sum_{s'}P_{ss'}^{a}\frac{\partialV^{\pi}}{\theta}))$
 
 Rearranging terms, and we start to see the policy gradient theorem:
-$\partial{\rho}{\theta} = \sum_{a}(\partial{\pi}{\theta}*Q + \pi * \sum_{s'}P_{ss'}^{a} \partial{V(s')}{\theta} ) - \partial{V(s)}{\theta}$
+$\frac{\partial\rho}{\theta} = \sum_{a}(\frac{\partial\pi}{\partial\theta}*Q + \pi * \sum_{s'}P_{ss'}^{a} \frac{\partialV(s')}{\partial\theta} ) - \frac{\partialV(s)}{\partial\theta}$
 
 One last piece to add is summing over $d^{\pi}$:
-$\sum_{s}d^{\pi}(s)\partial{\rho}{\theta} = \sum_{s}d^{\pi}(s) \sum_{a}\partial{\pi}{\theta}*Q + \sum_{s}d^{\pi}(s) \sum_{a}\pi \sum_{s'}P_{ss'}^{a} \partial{V(s')}{\theta} - \sum_{s}d^{\pi}(s) \partial{V(s)}{\theta}$
+$\sum_{s}d^{\pi}(s)\frac{\partial\rho}{\partial\theta} = \sum_{s}d^{\pi}(s) \sum_{a}\frac{\partial\pi}{\partial\theta}*Q + \sum_{s}d^{\pi}(s) \sum_{a}\pi \sum_{s'}P_{ss'}^{a} \frac{\partialV(s')}{\partial\theta} - \sum_{s}d^{\pi}(s) \frac{\partialV(s)}{\partial\theta}$
 
 Leveraging the fact that $d^{\pi}$ is stationary:
-$\sum_{s}d^{\pi}(s)\partial{\rho}{\theta} = \sum_{s}d^{\pi}(s) \sum_{a}\partial{\pi}{\theta}*Q + \sum_{s'}d^{\pi}(s')\partial{V(s')}{\theta} - \sum_{s}d^{\pi}(s) \partial{V(s)}{\theta}$
-I would like to touch on the jump from $\sum_{s}d^{\pi}(s) \sum_{a}\pi \sum_{s'}P_{ss'}^{a} \partial{V(s')}{\theta}$ to $\sum_{s'}d^{\pi}(s')\partial{V(s')}{\theta}$. Qualitatively, 
+$\sum_{s}d^{\pi}(s)\frac{\partial\rho}{\partial\theta} = \sum_{s}d^{\pi}(s) \sum_{a}\frac{\partial\pi}{\partial\theta}*Q + \sum_{s'}d^{\pi}(s')\frac{\partialV(s')}{\partial\theta} - \sum_{s}d^{\pi}(s) \frac{\partialV(s)}{\partial\theta}$
+I would like to touch on the jump from $\sum_{s}d^{\pi}(s) \sum_{a}\pi \sum_{s'}P_{ss'}^{a} \frac{\partialV(s')}{\partial\theta}$ to $\sum_{s'}d^{\pi}(s')\frac{\partialV(s')}{\partial\theta}$. Qualitatively, 
 
 The ultimate step to arrive at the policy gradient theorem is to notice $d^{\pi}$ sums to 1 as it is a proper probability distribution and $\sum_{s'}d^{\pi}(s')\partial{V(s')}{\theta} - \sum_{s}d^{\pi}(s) \partial{V(s)}{\theta} = 0$ since we are summing over all states in the left and right terms:
 
