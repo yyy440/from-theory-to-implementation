@@ -39,7 +39,7 @@ The most important takeaway is that the steady state distribution does not chang
 
 Here I will walk through each line of the the proof adding comments on how it came to be, which mostly uses the definitions of the above formulations.
 To start (expanding this out will give us $\frac{\partial\rho}{\partial\theta}$):
-$\frac{\partialV^{\pi}(s)}{\partial\theta} = \frac{\partial}{\partial\theta}\sum_{a}\pi(s,a)Q^{\pi}(s,a)$
+$\frac{\partial V^{\pi}(s)}{\partial\theta} = \frac{\partial}{\partial\theta}\sum_{a}\pi(s,a)Q^{\pi}(s,a)$
 
 Using the rules of calculus, we can take the derivative into the sum and apply the product rule:
 $=\sum_{a}(\frac{\partial\pi}{\partial\theta}Q^{\pi} + \pi \frac{\partial Q^{\pi}}{\partial\theta})$
