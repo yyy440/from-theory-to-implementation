@@ -15,7 +15,7 @@ Having laid out the foundations, there are two ways to express the goal of reinf
 
 $\rho(\pi) = lim_{n->\infty} \frac{1}{n}\mathbb{E}\[r_{1} + r\{2} + ... + r_{n}|\pi] = \sum_{s}d^{\pi}(s)\sum_{a}\pi(s,a)R_{s}^{a}$
 
-(Skip this paragraph if you understand the equation) To break it down in words we can use $\rho$ which is a function of policies to rank how desirable a policy is. Here $\rho$ is the average of the expected sum of the rewards when using policy $\pi$. Expanding a little more, remember in an environment you start at a random state $s_{0}$ choose actions based on the policy and get a reward based on the action chosen, then move to a new state $s_{1}$ and repeat until termination. This process generates a sequence rewards $r_{1}, r_{2}, ...$. Starting in different states may lead to a different sequence of rewards, so each reward sequence is seen with a certain probability and so each reward series is mutliplied by that probability which is where the expectation comes in. The rightmost expression is $\rho$ and the middle equation in a different form which comes in handy later. This introduces d^{\pi}(s) which is the stationary distribution of state s. Here is equation mathematically, $d^{\pi} = lim_{t->\infty} P(s_{t}=s|s_{0},\pi)$. In words, when you follow a policy for an infinite amount of time and count up the number of times each state is visited, you get the percentage or probability that state is visited when using this specific policy. Since the agent is going for infinite time, this probability is independent of whatever state you may start in as you will start in every state and infinite amount of times and the probability of visiting state s under each start state will converge. 
+(Skip this paragraph if you understand the equation) To break it down in words we can use $\rho$ which is a function of policies to rank how desirable a policy is. Here $\rho$ is the average of the expected sum of the rewards when using policy $\pi$. Expanding a little more, remember in an environment you start at a random state $s_{0}$ choose actions based on the policy and get a reward based on the action chosen, then move to a new state $s_{1}$ and repeat until termination. This process generates a sequence rewards $r_{1}, r_{2}, ...$. Starting in partialerent states may lead to a partialerent sequence of rewards, so each reward sequence is seen with a certain probability and so each reward series is mutliplied by that probability which is where the expectation comes in. The rightmost expression is $\rho$ and the middle equation in a partialerent form which comes in handy later. This introduces d^{\pi}(s) which is the stationary distribution of state s. Here is equation mathematically, $d^{\pi} = lim_{t->\infty} P(s_{t}=s|s_{0},\pi)$. In words, when you follow a policy for an infinite amount of time and count up the number of times each state is visited, you get the percentage or probability that state is visited when using this specific policy. Since the agent is going for infinite time, this probability is independent of whatever state you may start in as you will start in every state and infinite amount of times and the probability of visiting state s under each start state will converge. 
 
 Having $\rho(\pi)$, we can get the state-action value which is:
 
@@ -33,36 +33,36 @@ In addition, the steady state distribution of s is now $d^{\pi}(s) = \sum_{t=0}^
 At this point, the paper introduces the Policy Gradient Theorem:
 For any MDPs,
 
-$\diff{\rho}{\theta} = \sum_{s}d^{\pi}(s)\sum_{a}\diffp{\pi}{\theta}Q^{\pi}(s,a)$. 
+$\partial{\rho}{\theta} = \sum_{s}d^{\pi}(s)\sum_{a}\partialp{\pi}{\theta}Q^{\pi}(s,a)$. 
 ($\theta$ are the parameters of the policy)
-The most important takeaway is that the steady state distribution does not change with changes to policy parameters since no $\diffp{\d^{\pi}}{\theta}$ is present. Suppose it were the case that the state distribution changed as the policy is changed, then this affects $\rho$ which in turn, changes $Q^{\pi}$ leading to any ... (expand on this here) (Q^{\pi} can be approximated by returns)
+The most important takeaway is that the steady state distribution does not change with changes to policy parameters since no $\partialp{\d^{\pi}}{\theta}$ is present. Suppose it were the case that the state distribution changed as the policy is changed, then this affects $\rho$ which in turn, changes $Q^{\pi}$ leading to any ... (expand on this here) (Q^{\pi} can be approximated by returns)
 
 Here I will walk through each line of the the proof adding comments on how it came to be, which mostly uses the definitions of the above formulations.
-To start (expanding this out will give us $\diff{\rho}{\theta}$):
-$\diff{V^{\pi}(s)}{\theta} = \diff{}{\theta}\sum_{a}\pi(s,a)Q^{\pi}(s,a)$
+To start (expanding this out will give us $\partial{\rho}{\theta}$):
+$\partial{V^{\pi}(s)}{\theta} = \partial{}{\theta}\sum_{a}\pi(s,a)Q^{\pi}(s,a)$
 
 Using the rules of calculus, we can take the derivative into the sum and apply the product rule:
-$=\sum_{a}(\diff{\pi}{\theta}Q^{\pi} + \pi \diff{Q^{\pi}}{\theta})$
+$=\sum_{a}(\partial{\pi}{\theta}Q^{\pi} + \pi \partial{Q^{\pi}}{\theta})$
 
 Next it is beneficial to expand out the definition of $Q^{\pi}$ in the term to the right of the $+$ sign:
-$=\sum_{a}(\diff{\pi}{\theta}Q^{\pi} + \pi*\diff{}{\theta}(R_{s}^{a} - \rho(\pi) + \sum_{s'}(P_{ss'}^{a}V^{\pi}(s'))))$
+$=\sum_{a}(\partial{\pi}{\theta}Q^{\pi} + \pi*\partial{}{\theta}(R_{s}^{a} - \rho(\pi) + \sum_{s'}(P_{ss'}^{a}V^{\pi}(s'))))$
 
-Now pass the derivative operator through. Only $V^{\pi}$ depends on the policy params $\theta$ and finally $\diff{\rho}{\theta}$ appears:
-$=\sum_{a}(\diff{\pi}{\theta}Q^{\pi} + \pi*(-\diff{\rho}{\pi} + \sum_{s'}P_{ss'}^{a}\diff{V^{\pi}}{\theta}))$
+Now pass the derivative operator through. Only $V^{\pi}$ depends on the policy params $\theta$ and finally $\partial{\rho}{\theta}$ appears:
+$=\sum_{a}(\partial{\pi}{\theta}Q^{\pi} + \pi*(-\partial{\rho}{\pi} + \sum_{s'}P_{ss'}^{a}\partial{V^{\pi}}{\theta}))$
 
 Rearranging terms, and we start to see the policy gradient theorem:
-$\diff{\rho}{\theta} = \sum_{a}(\diff{\pi}{\theta}*Q + \pi * \sum_{s'}P_{ss'}^{a} \diff{V(s')}{\theta} ) - \diff{V(s)}{\theta}$
+$\partial{\rho}{\theta} = \sum_{a}(\partial{\pi}{\theta}*Q + \pi * \sum_{s'}P_{ss'}^{a} \partial{V(s')}{\theta} ) - \partial{V(s)}{\theta}$
 
 One last piece to add is summing over $d^{\pi}$:
-$\sum_{s}d^{\pi}(s)\diff{\rho}{\theta} = \sum_{s}d^{\pi}(s) \sum_{a}\diff{\pi}{\theta}*Q + \sum_{s}d^{\pi}(s) \sum_{a}\pi \sum_{s'}P_{ss'}^{a} \diff{V(s')}{\theta} - \sum_{s}d^{\pi}(s) \diff{V(s)}{\theta}$
+$\sum_{s}d^{\pi}(s)\partial{\rho}{\theta} = \sum_{s}d^{\pi}(s) \sum_{a}\partial{\pi}{\theta}*Q + \sum_{s}d^{\pi}(s) \sum_{a}\pi \sum_{s'}P_{ss'}^{a} \partial{V(s')}{\theta} - \sum_{s}d^{\pi}(s) \partial{V(s)}{\theta}$
 
 Leveraging the fact that $d^{\pi}$ is stationary:
-$\sum_{s}d^{\pi}(s)\diff{\rho}{\theta} = \sum_{s}d^{\pi}(s) \sum_{a}\diff{\pi}{\theta}*Q + \sum_{s'}d^{\pi}(s')\diff{V(s')}{\theta} - \sum_{s}d^{\pi}(s) \diff{V(s)}{\theta}$
-I would like to touch on the jump from $\sum_{s}d^{\pi}(s) \sum_{a}\pi \sum_{s'}P_{ss'}^{a} \diff{V(s')}{\theta}$ to $\sum_{s'}d^{\pi}(s')\diff{V(s')}{\theta}$. Qualitatively, 
+$\sum_{s}d^{\pi}(s)\partial{\rho}{\theta} = \sum_{s}d^{\pi}(s) \sum_{a}\partial{\pi}{\theta}*Q + \sum_{s'}d^{\pi}(s')\partial{V(s')}{\theta} - \sum_{s}d^{\pi}(s) \partial{V(s)}{\theta}$
+I would like to touch on the jump from $\sum_{s}d^{\pi}(s) \sum_{a}\pi \sum_{s'}P_{ss'}^{a} \partial{V(s')}{\theta}$ to $\sum_{s'}d^{\pi}(s')\partial{V(s')}{\theta}$. Qualitatively, 
 
-The ultimate step to arrive at the policy gradient theorem is to notice $d^{\pi}$ sums to 1 as it is a proper probability distribution and $\sum_{s'}d^{\pi}(s')\diff{V(s')}{\theta} - \sum_{s}d^{\pi}(s) \diff{V(s)}{\theta} = 0$ since we are summing over all states in the left and right terms:
+The ultimate step to arrive at the policy gradient theorem is to notice $d^{\pi}$ sums to 1 as it is a proper probability distribution and $\sum_{s'}d^{\pi}(s')\partial{V(s')}{\theta} - \sum_{s}d^{\pi}(s) \partial{V(s)}{\theta} = 0$ since we are summing over all states in the left and right terms:
 
-$\diff{\rho}{\theta} = \sum_{s}d^{\pi}(s)\sum_{a}\diffp{\pi}{\theta}Q^{\pi}(s,a)$
+$\partial{\rho}{\theta} = \sum_{s}d^{\pi}(s)\sum_{a}\partialp{\pi}{\theta}Q^{\pi}(s,a)$
 
-The requirement is that we have a good approximate for $Q^{\pi}$. Following the paper's notation, let $f_{w}$ be an approximation for $Q^{\pi}$ where $f$ is a function parameterized by weights $w$. To learn $f_{w}$ it is possible to take actions according to $\pi$ and use the update rule: $\diff{}{w}\[\hat{Q}-f_{w}\]^{2}$. To take the derivative of this we need the chain rule, and that leaves us with: $\[\hat{Q}-f_{w}\]\diff{f_{w}}{w}$ 
+The requirement is that we have a good approximate for $Q^{\pi}$. Following the paper's notation, let $f_{w}$ be an approximation for $Q^{\pi}$ where $f$ is a function parameterized by weights $w$. To learn $f_{w}$ it is possible to take actions according to $\pi$ and use the update rule: $\partial{}{w}\[\hat{Q}-f_{w}\]^{2}$. To take the derivative of this we need the chain rule, and that leaves us with: $\[\hat{Q}-f_{w}\]\partial{f_{w}}{w}$ 
 
