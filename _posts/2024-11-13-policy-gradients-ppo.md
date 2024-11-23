@@ -33,19 +33,19 @@ In addition, the steady state distribution of s is now $d^{\pi}(s) = \sum_{t=0}^
 At this point, the paper introduces the Policy Gradient Theorem:
 For any MDPs,
 
-$\frac{\partial{\rho}}{\partial\theta} = \sum_{s}d^{\pi}(s)\sum_{a}\fac{\partialp{\pi}}{\partial\theta}Q^{\pi}(s,a)$. 
+$\frac{\partial\rho}{\partial\theta} = \sum_{s}d^{\pi}(s)\sum_{a}\fac{\partial\pi}{\partial\theta}Q^{\pi}(s,a)$. 
 ($\theta$ are the parameters of the policy)
-The most important takeaway is that the steady state distribution does not change with changes to policy parameters since no $\frac{\partial{\d^{\pi}}}{\partial\theta}$ is present. Suppose it were the case that the state distribution changed as the policy is changed, then this affects $\rho$ which in turn, changes $Q^{\pi}$ leading to any ... (expand on this here) (Q^{\pi} can be approximated by returns)
+The most important takeaway is that the steady state distribution does not change with changes to policy parameters since no $\frac{\partial\d^{\pi}}{\partial\theta}$ is present. Suppose it were the case that the state distribution changed as the policy is changed, then this affects $\rho$ which in turn, changes $Q^{\pi}$ leading to any ... (expand on this here) ($Q^{\pi}$ can be approximated by returns)
 
 Here I will walk through each line of the the proof adding comments on how it came to be, which mostly uses the definitions of the above formulations.
-To start (expanding this out will give us $\partial{\rho}{\theta}$):
-$\partial{V^{\pi}(s)}{\theta} = \partial{}{\theta}\sum_{a}\pi(s,a)Q^{\pi}(s,a)$
+To start (expanding this out will give us $\frac{\partial\rho}{\partial\theta}$):
+$\frac{\partialV^{\pi}(s)}{\partial\theta} = \frac{\partial}{\partial\theta}\sum_{a}\pi(s,a)Q^{\pi}(s,a)$
 
 Using the rules of calculus, we can take the derivative into the sum and apply the product rule:
-$=\sum_{a}(\partial{\pi}{\theta}Q^{\pi} + \pi \partial{Q^{\pi}}{\theta})$
+$=\sum_{a}(\frac{\partial\pi}{\partial\theta}Q^{\pi} + \pi \frac{\partialQ^{\pi}}{\partial\theta})$
 
 Next it is beneficial to expand out the definition of $Q^{\pi}$ in the term to the right of the $+$ sign:
-$=\sum_{a}(\partial{\pi}{\theta}Q^{\pi} + \pi*\partial{}{\theta}(R_{s}^{a} - \rho(\pi) + \sum_{s'}(P_{ss'}^{a}V^{\pi}(s'))))$
+$=\sum_{a}(\frac{\partial\pi}{\partial\theta}Q^{\pi} + \pi*\frac{\partial}{\partial\theta}(R_{s}^{a} - \rho(\pi) + \sum_{s'}(P_{ss'}^{a}V^{\pi}(s'))))$
 
 Now pass the derivative operator through. Only $V^{\pi}$ depends on the policy params $\theta$ and finally $\partial{\rho}{\theta}$ appears:
 $=\sum_{a}(\partial{\pi}{\theta}Q^{\pi} + \pi*(-\partial{\rho}{\pi} + \sum_{s'}P_{ss'}^{a}\partial{V^{\pi}}{\theta}))$
