@@ -31,7 +31,7 @@ $Q^{\pi}(s,a) = \mathbb{E}\[\sum_{k=1}^{\infty}\gamma^{k-1}r_{t+k}|s_{t}=s,a_{t}
 In addition, the steady state distribution of s is now $d^{\pi}(s) = \sum_{t=0}^{\infty}\gamma^{t}P(s_{t}=s|s_{0},\pi)$. In words, the frequnecy of state visits to a particular state s is the discounted sum of the probability that state is visited when starting in state s_{0} and following policy $\pi$, at every timestep. Exponential discounting bounds the value so that it is finite. 
 
 At this point, the paper introduces the Policy Gradient Theorem:
-For any MDPs,
+For any MDPs, <br />
 
 $\frac{\partial\rho}{\partial\theta} = \sum_{s}d^{\pi}(s)\sum_{a}\frac{\partial\pi}{\partial\theta}Q^{\pi}(s,a)$. 
 ($\theta$ are the parameters of the policy)
