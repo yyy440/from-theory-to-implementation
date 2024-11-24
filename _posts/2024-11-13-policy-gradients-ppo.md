@@ -39,12 +39,12 @@ In addition, the steady state distribution of s is now $d^{\pi}(s) = \sum_{t=0}^
 At this point, the paper introduces the Policy Gradient Theorem:
 For any MDPs, <br />
 
-$\frac{\partial\rho}{\partial\theta} = \sum_{s}d^{\pi}(s)\sum_{a}\frac{\partial\pi}{\partial\theta}Q^{\pi}(s,a)$. <br \>
-($\theta$ are the parameters of the policy) <br \>
+$\frac{\partial\rho}{\partial\theta} = \sum_{s}d^{\pi}(s)\sum_{a}\frac{\partial\pi}{\partial\theta}Q^{\pi}(s,a)$. <br />
+($\theta$ are the parameters of the policy) <br />
 **The most important takeaway is that the steady state distribution does not change with changes to policy parameters since no $\frac{\partial d^{\pi}}{\partial\theta}$ is present.** Suppose it were the case that the state distribution changed as the policy is changed, then this affects $\rho$ which in turn, changes $Q^{\pi}$ leading to any ... (expand on this here) ($Q^{\pi}$ can be approximated by returns)
 ### Proof
-Here I will walk through each line of the the proof adding comments on how it came to be, which mostly uses the definitions of the above formulations.
-To start (expanding this out will give us $\frac{\partial\rho}{\partial\theta}$. Note: I will be liberal in leaving out parts of notation, because it takes more time to type and takes up more space.): <br />
+Here I will walk through each line of the the proof adding comments on how it came to be, which mostly uses the definitions of the above formulations. (Note: I will be liberal in leaving out parts of notation, because it takes more time to type and takes up more space.) <br />
+To start (expanding this out will give us $\frac{\partial\rho}{\partial\theta}$): <br />
 $\frac{\partial V^{\pi}(s)}{\partial\theta} = \frac{\partial}{\partial\theta}\sum_{a}\pi(s,a)Q^{\pi}(s,a)$ <br />
 
 Using the rules of calculus, we can take the derivative into the sum and apply the product rule: <br />
