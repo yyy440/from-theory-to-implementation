@@ -33,25 +33,25 @@ In addition, the steady state distribution of s is now $d^{\pi}(s) = \sum_{t=0}^
 At this point, the paper introduces the Policy Gradient Theorem:
 For any MDPs, <br />
 
-$\frac{\partial\rho}{\partial\theta} = \sum_{s}d^{\pi}(s)\sum_{a}\frac{\partial\pi}{\partial\theta}Q^{\pi}(s,a)$. 
-($\theta$ are the parameters of the policy)
-The most important takeaway is that the steady state distribution does not change with changes to policy parameters since no $\frac{\partial d^{\pi}}{\partial\theta}$ is present. Suppose it were the case that the state distribution changed as the policy is changed, then this affects $\rho$ which in turn, changes $Q^{\pi}$ leading to any ... (expand on this here) ($Q^{\pi}$ can be approximated by returns)
+$\frac{\partial\rho}{\partial\theta} = \sum_{s}d^{\pi}(s)\sum_{a}\frac{\partial\pi}{\partial\theta}Q^{\pi}(s,a)$. <br \>
+($\theta$ are the parameters of the policy) <br \>
+**The most important takeaway is that the steady state distribution does not change with changes to policy parameters since no $\frac{\partial d^{\pi}}{\partial\theta}$ is present.** Suppose it were the case that the state distribution changed as the policy is changed, then this affects $\rho$ which in turn, changes $Q^{\pi}$ leading to any ... (expand on this here) ($Q^{\pi}$ can be approximated by returns)
 
 Here I will walk through each line of the the proof adding comments on how it came to be, which mostly uses the definitions of the above formulations.
-To start (expanding this out will give us $\frac{\partial\rho}{\partial\theta}$):
-$\frac{\partial V^{\pi}(s)}{\partial\theta} = \frac{\partial}{\partial\theta}\sum_{a}\pi(s,a)Q^{\pi}(s,a)$
+To start (expanding this out will give us $\frac{\partial\rho}{\partial\theta}$): <br />
+$\frac{\partial V^{\pi}(s)}{\partial\theta} = \frac{\partial}{\partial\theta}\sum_{a}\pi(s,a)Q^{\pi}(s,a)$ <br />
 
-Using the rules of calculus, we can take the derivative into the sum and apply the product rule:
-$=\sum_{a}(\frac{\partial\pi}{\partial\theta}Q^{\pi} + \pi \frac{\partial Q^{\pi}}{\partial\theta})$
+Using the rules of calculus, we can take the derivative into the sum and apply the product rule: <br />
+$=\sum_{a}(\frac{\partial\pi}{\partial\theta}Q^{\pi} + \pi \frac{\partial Q^{\pi}}{\partial\theta})$ <br />
 
-Next it is beneficial to expand out the definition of $Q^{\pi}$ in the term to the right of the $+$ sign:
+Next it is beneficial to expand out the definition of $Q^{\pi}$ in the term to the right of the $+$ sign: <br />
 $=\sum_{a}(\frac{\partial\pi}{\partial\theta}Q^{\pi} + \pi*\frac{\partial}{\partial\theta}(R_{s}^{a} - \rho(\pi) + \sum_{s'}(P_{ss'}^{a}V^{\pi}(s'))))$
+<br />
+Now pass the derivative operator through. Only $V^{\pi}$ depends on the policy params $\theta$ and finally $\partial{\rho}{\theta}$ appears: <br />
+$=\sum_{a}(\frac{\partial\pi}{\partial\theta}Q^{\pi} + \pi*(-\frac{\partial\rho}{\partial\theta} + \sum_{s'}P_{ss'}^{a}\frac{\partial V^{\pi}}{\theta}))$ <br />
 
-Now pass the derivative operator through. Only $V^{\pi}$ depends on the policy params $\theta$ and finally $\partial{\rho}{\theta}$ appears:
-$=\sum_{a}(\frac{\partial\pi}{\partial\theta}Q^{\pi} + \pi*(-\frac{\partial\rho}{\partial\theta} + \sum_{s'}P_{ss'}^{a}\frac{\partial V^{\pi}}{\theta}))$
-
-Rearranging terms, and we start to see the policy gradient theorem:
-$\frac{\partial\rho}{\theta} = \sum_{a}(\frac{\partial\pi}{\partial\theta}*Q + \pi * \sum_{s'}P_{ss'}^{a} \frac{\partial V(s')}{\partial\theta} ) - \frac{\partial V(s)}{\partial\theta}$
+Rearranging terms, and we start to see the policy gradient theorem: <br />
+$\frac{\partial\rho}{\theta} = \sum_{a}(\frac{\partial\pi}{\partial\theta}*Q + \pi * \sum_{s'}P_{ss'}^{a} \frac{\partial V(s')}{\partial\theta} ) - \frac{\partial V(s)}{\partial\theta}$ <br />
 
 One last piece to add is summing over $d^{\pi}$:
 $\sum_{s}d^{\pi}(s)\frac{\partial\rho}{\partial\theta} = \sum_{s}d^{\pi}(s) \sum_{a}\frac{\partial\pi}{\partial\theta}*Q + \sum_{s}d^{\pi}(s) \sum_{a}\pi \sum_{s'}P_{ss'}^{a} \frac{\partial V(s')}{\partial\theta} - \sum_{s}d^{\pi}(s) \frac{\partial V(s)}{\partial\theta}$
