@@ -41,7 +41,7 @@ For any MDPs, <br />
 
 $\frac{\partial\rho}{\partial\theta} = \sum_{s}d^{\pi}(s)\sum_{a}\frac{\partial\pi}{\partial\theta}Q^{\pi}(s,a)$. <br />
 ($\theta$ are the parameters of the policy) <br />
-**The most important takeaway is that the steady state distribution does not change with changes to policy parameters since no $\frac{\partial d^{\pi}}{\partial\theta}$ is present.** Suppose it were the case that the state distribution changed as the policy is changed, then this affects $\rho$ which in turn, changes $Q^{\pi}$ leading to any ... (expand on this here) ($Q^{\pi}$ can be approximated by returns)
+**The most important takeaway is that the steady state distribution does not change with changes to policy parameters since no $\frac{\partial d^{\pi}}{\partial\theta}$ is present.** Suppose it were the case that the state distribution changed as the policy is changed, then this affects $\rho$ which in turn, changes $Q^{\pi}$ leading to biased estimates ($Q^{\pi}$ can be approximated by returns)......
 ### Proof
 Here I will walk through each line of the the proof adding comments on how it came to be, which mostly uses the definitions of the above formulations. (Note: I will be liberal in leaving out parts of notation, because it takes more time to type and takes up more space.) <br />
 To start (expanding this out will give us $\frac{\partial\rho}{\partial\theta}$): <br />
@@ -64,11 +64,13 @@ $\sum_{s}d^{\pi}(s)\frac{\partial\rho}{\partial\theta} = \sum_{s}d^{\pi}(s) \sum
 
 Leveraging the fact that $d^{\pi}$ is stationary: <br />
 $\sum_{s}d^{\pi}(s)\frac{\partial\rho}{\partial\theta} = \sum_{s}d^{\pi}(s) \sum_{a}\frac{\partial\pi}{\partial\theta}*Q + \sum_{s'}d^{\pi}(s')\frac{\partial V(s')}{\partial\theta} - \sum_{s}d^{\pi}(s) \frac{\partial V(s)}{\partial\theta}$ <br />
-I would like to touch on the jump from $\sum_{s}d^{\pi}(s) \sum_{a}\pi \sum_{s'}P_{ss'}^{a} \frac{\partial V(s')}{\partial\theta}$ to $\sum_{s'}d^{\pi}(s')\frac{\partial V(s')}{\partial\theta}$. Qualitatively, 
+I would like to touch on the jump from $\sum_{s}d^{\pi}(s) \sum_{a}\pi \sum_{s'}P_{ss'}^{a} \frac{\partial V(s')}{\partial\theta}$ to $\sum_{s'}d^{\pi}(s')\frac{\partial V(s')}{\partial\theta}$. <br />
+Qualitatively, start with the end point, which is $d^{\pi}(s')$ or the steady state distribution of the next states and the probability of getting to state $s'$ is dependent on the steady state probability of the current state $d^{\pi}(s)$, the policy $\pi(s,a)$, and the transition probabilities $P_{ss'}^{a}$.
 
 The ultimate step to arrive at the policy gradient theorem is to notice $d^{\pi}$ sums to 1 as it is a proper probability distribution and $\sum_{s'}d^{\pi}(s')\frac{\partial V(s')}{\partial\theta} - \sum_{s}d^{\pi}(s) \frac{\partial V(s)}{\partial\theta} = 0$ since we are summing over all states in the left and right terms: <br />
 
 $\frac{\partial\rho}{\partial\theta} = \sum_{s}d^{\pi}(s)\sum_{a}\frac{\partial\pi}{\partial\theta}Q^{\pi}(s,a)$ <br />
+The summation over the steady state distributions and derivative of state value functions cancel each other out as in both cases they are summing over all states (See appendix for a walk through of the proof in the second formulation).
 
 The requirement is that we have a good approximate for $Q^{\pi}$. Following the paper's notation, let $f_{w}$ be an approximation for $Q^{\pi}$ where $f$ is a function parameterized by weights $w$. To learn $f_{w}$ it is possible to take actions according to $\pi$ and use the update rule: $\frac{\partial}{\partial w}\[\hat{Q}-f_{w}\]^{2}$. To take the derivative of this we need the chain rule, and that leaves us with: $\[\hat{Q}-f_{w}\]\frac{\partial f_{w}}{\partial w}$ 
 
